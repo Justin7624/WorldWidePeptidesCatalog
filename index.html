@@ -651,6 +651,58 @@
     }
     .toast.show{ display:block; }
     .sr{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+    /* ===== OIL SECTION (ELITE SEPARATION) ===== */
+    .oil-section {
+      margin-top: 50px;
+      padding: 22px;
+      border-radius: 24px;
+    
+      background: linear-gradient(
+        180deg,
+        rgba(10, 25, 35, 0.75),
+        rgba(5, 12, 18, 0.95)
+      );
+    
+      border: 1px solid rgba(59,178,115,.45);
+    
+      box-shadow:
+        0 0 60px rgba(59,178,115,.18),
+        0 0 120px rgba(30,111,168,.12),
+        inset 0 0 30px rgba(59,178,115,.08);
+    
+      backdrop-filter: blur(25px);
+    }
+    
+    .oil-header {
+      font-size: 22px;
+      font-weight: 1000;
+      letter-spacing: .18em;
+      margin-bottom: 18px;
+      color: #3bb273;
+      text-transform: uppercase;
+    
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    
+    .oil-header::before {
+      content: "⚡";
+      font-size: 20px;
+    }
+    
+    .card.oil {
+      border-color: rgba(59,178,115,.55);
+      box-shadow:
+        0 0 30px rgba(59,178,115,.2),
+        0 0 60px rgba(30,111,168,.15);
+    }
+    
+    .card.oil:hover {
+      box-shadow:
+        0 0 70px rgba(59,178,115,.35),
+        0 0 120px rgba(30,111,168,.25);
+    }
 
     @media (max-width: 900px){
       .drawer-body{ grid-template-columns: 1fr; }
@@ -1387,71 +1439,95 @@
       grid.innerHTML = "";
       empty.style.display = list.length ? "none" : "block";
 
-      list.forEach(it => {
+      grid.innerHTML = "";
+      empty.style.display = list.length ? "none" : "block";
+      
+      /* ===== SPLIT OIL ===== */
+      const normalItems = list.filter(it => it.cat !== "oil");
+      const oilItems = list.filter(it => it.cat === "oil");
+      
+      /* ===== CARD BUILDER ===== */
+      function buildCard(it, isOil=false){
         const minP = itemMinPrice(it), maxP = itemMaxPrice(it);
         const range = (minP === maxP) ? money(minP) : `${money(minP)}–${money(maxP)}`;
-
+      
         const card = document.createElement("article");
-        card.className = "card";
+        card.className = "card" + (isOil ? " oil" : "");
+      
         card.innerHTML = `
           <div class="top">
-            <div style="min-width:0">
+            <div>
               <h3 class="name">${esc(it.name)}</h3>
               <div class="tagrow">
                 <span class="tag red">${esc(getCatLabel(it.cat))}</span>
                 <span class="tag mono">${esc(it.id.toUpperCase())}</span>
               </div>
             </div>
-            <div class="price">${range}<small>${it.variants.length>1 ? "range" : ""}</small></div>
+            <div class="price">${range}</div>
           </div>
-
+      
           <div class="mid">
-            <div style="color:var(--muted); font-weight:850; font-size:12px; letter-spacing:.12em; text-transform:uppercase;">
-              ${esc(CAT_DESC[it.cat] || "Catalog item")}
-            </div>
+            <div>${esc(CAT_DESC[it.cat] || "")}</div>
             <div class="strengths">
-              ${it.variants.map((v,i)=> `<button class="strength" data-idx="${i}" title="Select ${esc(v.strength)}">${esc(v.strength)}</button>`).join("")}
+              ${it.variants.map((v,i)=>`
+                <button class="strength" data-i="${i}">${v.strength}</button>
+              `).join("")}
             </div>
           </div>
-
+      
           <div class="footer">
-            <div class="mini">Tap <span class="kbd">View</span> for details • Add to cart for totals</div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap">
-              <button class="btn" data-view="1">👁 View</button>
-              <button class="btn primary" data-add="1">🛒 Add</button>
-            </div>
+            <button class="btn" data-view>View</button>
+            <button class="btn primary" data-add>Add</button>
           </div>
         `;
-
+      
         it._active = 0;
-        card.querySelectorAll(".strength").forEach(btn => {
-          btn.onclick = () => {
-            card.querySelectorAll(".strength").forEach(b=> b.dataset.active = "false");
-            btn.dataset.active = "true";
-            it._active = Number(btn.dataset.idx);
-            const v = it.variants[it._active];
-            const priceEl = card.querySelector(".price");
-            priceEl.innerHTML = `${money(v.price)}<small>${esc(v.strength)}</small>`;
+      
+        card.querySelectorAll(".strength").forEach(btn=>{
+          btn.onclick = ()=>{
+            it._active = Number(btn.dataset.i);
+            card.querySelectorAll(".strength").forEach(b=>b.dataset.active="false");
+            btn.dataset.active="true";
           };
         });
-        const first = card.querySelector(".strength");
-        if(first){ first.dataset.active = "true"; }
-
-        card.querySelector('[data-view]').onclick = ()=> openDetail(it, it.variants[it._active || 0]);
-        card.querySelector('[data-add]').onclick = ()=> { addToCart(it, it.variants[it._active || 0]); toast("Added to cart"); };
-
-        card.addEventListener("mousemove", (e)=>{
-          if(window.matchMedia("(hover:hover) and (pointer:fine)").matches){
-            const r = card.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width - 0.5;
-            const y = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform = `perspective(900px) rotateY(${x*6}deg) rotateX(${y*-6}deg)`;
-          }
-        });
-        card.addEventListener("mouseleave", ()=> card.style.transform = "translateZ(0)");
-
-        grid.appendChild(card);
+      
+        card.querySelector("[data-view]").onclick = ()=>{
+          openDetail(it, it.variants[it._active || 0]);
+        };
+      
+        card.querySelector("[data-add]").onclick = ()=>{
+          addToCart(it, it.variants[it._active || 0]);
+          toast("Added");
+        };
+      
+        return card;
+      }
+      
+      /* ===== NORMAL ===== */
+      normalItems.forEach(it=>{
+        grid.appendChild(buildCard(it));
       });
+      
+      /* ===== OIL SECTION ===== */
+      if(oilItems.length){
+        const section = document.createElement("div");
+        section.className = "oil-section";
+      
+        const header = document.createElement("div");
+        header.className = "oil-header";
+        header.textContent = "Oil / Oral Compounds";
+      
+        const oilGrid = document.createElement("div");
+        oilGrid.className = "grid";
+      
+        oilItems.forEach(it=>{
+          oilGrid.appendChild(buildCard(it, true));
+        });
+      
+        section.appendChild(header);
+        section.appendChild(oilGrid);
+        grid.appendChild(section);
+      }
 
       if(scrollAfter) setTimeout(()=> scrollToCat(state.cat), 40);
     }
