@@ -104,7 +104,6 @@
         linear-gradient(180deg, rgba(30,111,168,.08), transparent 35%);
       pointer-events:none;
     }
-}
     .hero-overlay h1{
       margin:0;
       font-size:clamp(34px, 6vw, 62px);
@@ -1099,7 +1098,7 @@
       
       { id:"lgd4033", name:"LGD-4033", cat:"oil", variants:[
         {strength:"12mg", price:60}
-      ]};
+      ]}
     ];
 
     const state = { cat:"all", q:"", sort:"featured", sectionView:false, detail:null, cart:new Map() };
@@ -1130,7 +1129,7 @@
       if(sort === "priceAsc") a.sort((x,y)=> itemMinPrice(x) - itemMinPrice(y));
       if(sort === "priceDesc") a.sort((x,y)=> itemMaxPrice(y) - itemMaxPrice(x));
       if(sort === "featured"){
-        const rank = { healing:1, energy:2, gh:3, cognitive:4, aesthetic:5, fatloss:6, detox:7, tabs:8, supplies:9, kits:10 };
+        const rank = { healing:1, energy:2, gh:3, cognitive:4, aesthetic:5, fatloss:6, detox:7, tabs:8, supplies:9, kits:10, oil:11 };
         a.sort((x,y)=> (rank[x.cat]||99) - (rank[y.cat]||99));
       }
       return a;
