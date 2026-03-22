@@ -1581,9 +1581,8 @@ document.getElementById("dNote").innerHTML = `
       state.sectionView = !state.sectionView;
       syncUI(); render(true);
     });
-document.getElementById("clearCart").onclick = ()=> { clearCart(); toast("Cart cleared"); };
 
-    function init(){ buildChips(); syncUI(); render(); renderCart(); }
+    function init(){ buildChips(); syncUI(); render(); }
     init();
   </script>
 </body>
