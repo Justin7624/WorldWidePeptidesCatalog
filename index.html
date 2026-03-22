@@ -704,8 +704,9 @@
         </div>
 
         <div class="actions">
-<button class="btn" id="openCart" title="Open cart">🛒 Cart</button>
-</div>
+<a href="YOUR_JOTFORM_LINK_HERE" target="_blank" class="btn primary">
+  Checkout
+</a></div>
       </div>
 
       <div class="toolbar">
@@ -733,7 +734,7 @@
         <div class="hero-text">
           <h2 class="hero-title">Worldwide Peptides Catalog</h2>
           <p class="hero-desc">
-            Browse by category, quick filter, and add items to your cart to see a total.
+            Browse by category and select products, then use checkout to complete your order.
           </p>
         </div>
 
@@ -757,64 +758,6 @@
       <b style="color:#fff">Disclaimer:</b> Research use only. Not medical advice.
     </div>
   </main>
-
-  <!-- Cart drawer -->
-  <div class="backdrop" id="cartBackdrop" role="dialog" aria-modal="true" aria-label="Cart">
-    <div class="drawer">
-      <div class="drawer-head">
-        <b>Cart</b>
-        <button class="x" data-close="cartBackdrop" aria-label="Close">✕</button>
-      </div>
-
-      <div class="drawer-body">
-        <div class="pane left">
-          <h3 class="d-title">Your Cart</h3>
-          <div class="d-meta" id="cartMeta"></div>
-          <p class="d-desc">
-            Add items from the catalog to see a running total.
-          </p>
-
-          <div class="divider"></div>
-
-          <div class="cart">
-            <div class="cart-row">
-              <b style="letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:12px">Items</b>
-              <button class="btn" id="clearCart">🧹 Clear</button>
-            </div>
-            <div class="cart-list" id="cartList"></div>
-
-            <div class="totals">
-              <div class="tile">
-                <b>Subtotal</b>
-                <div class="val" id="subTotal">$0.00</div>
-                <div class="sub" id="subMeta">—</div>
-              </div>
-              <div class="tile">
-                <b>Total</b>
-                <div class="val" id="grandTotal">$0.00</div>
-                <div class="sub">No online checkout</div>
-              </div>
-            </div>
-
-            <div class="note">
-              <b style="color:#fff">Checkout:</b> DM to checkout. This cart is for pricing only.
-            </div>
-          </div>
-        </div>
-
-        <div class="pane right">
-          <h3 class="d-title" style="font-size:22px">How it works</h3>
-          <div class="divider"></div>
-          <div class="note">
-            1) Filter by category<br>
-            2) Pick strength (if available)<br>
-            3) Tap <b>Add to Cart</b> and view total in the cart
-          </div>
-          <div class="divider"></div>
-</div>
-      </div>
-    </div>
-  </div>
 
   <!-- Product detail drawer -->
   <div class="backdrop" id="detailBackdrop" role="dialog" aria-modal="true" aria-label="Product details">
@@ -1428,7 +1371,7 @@
         if(first){ first.dataset.active = "true"; }
 
         card.querySelector('[data-view]').onclick = ()=> openDetail(it, it.variants[it._active || 0]);
-        card.querySelector('[data-add]').onclick = ()=> { addToCart(it, it.variants[it._active || 0]); toast("Added to cart"); };
+        card.querySelector('[data-add]').onclick = ()=> {toast("Use checkout button");};
 
         card.addEventListener("mousemove", (e)=>{
           if(window.matchMedia("(hover:hover) and (pointer:fine)").matches){
@@ -1537,10 +1480,7 @@ document.getElementById("dNote").innerHTML = `
     }
 
     document.getElementById("addToCart").onclick = ()=>{
-      if(!state.detail) return;
-      addToCart(state.detail.item, state.detail.variant);
-      toast("Added to cart");
-      renderCart();
+      toast("Use checkout button");
     };
 
     document.getElementById("copyLine").onclick = async ()=>{
@@ -1641,7 +1581,6 @@ document.getElementById("dNote").innerHTML = `
       state.sectionView = !state.sectionView;
       syncUI(); render(true);
     });
-document.getElementById("openCart").onclick = ()=> { open("cartBackdrop"); renderCart(); };
 document.getElementById("clearCart").onclick = ()=> { clearCart(); toast("Cart cleared"); };
 
     function init(){ buildChips(); syncUI(); render(); renderCart(); }
