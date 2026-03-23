@@ -404,6 +404,35 @@
       
       animation: fadeUp .4s ease forwards;
     }
+    .card{
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(
+        220px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(59,178,115,.18),
+        rgba(30,111,168,.12) 30%,
+        transparent 60%
+      );
+      opacity:0;
+      transition: opacity .2s ease;
+      pointer-events:none;
+      z-index:0;
+    }
+    
+    .card:hover::before{
+      opacity:1;
+    }
+    
+    .card > *{
+      position:relative;
+      z-index:1;
+    }
     .card:hover{
       border-color: rgba(59,178,115,.7);
     
@@ -1376,12 +1405,22 @@
         card.addEventListener("mousemove", (e)=>{
           if(window.matchMedia("(hover:hover) and (pointer:fine)").matches){
             const r = card.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width - 0.5;
-            const y = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform = `perspective(900px) rotateY(${x*6}deg) rotateX(${y*-6}deg)`;
+            const px = e.clientX - r.left;
+            const py = e.clientY - r.top;
+            const x = px / r.width - 0.5;
+            const y = py / r.height - 0.5;
+        
+            card.style.transform = `perspective(900px) rotateY(${x*7}deg) rotateX(${y*-7}deg) translateY(-4px)`;
+            card.style.setProperty("--mx", `${px}px`);
+            card.style.setProperty("--my", `${py}px`);
           }
         });
-        card.addEventListener("mouseleave", ()=> card.style.transform = "translateZ(0)");
+        
+        card.addEventListener("mouseleave", ()=>{
+          card.style.transform = "translateZ(0)";
+          card.style.setProperty("--mx", "50%");
+          card.style.setProperty("--my", "50%");
+        });
 
         grid.appendChild(card);
       });
