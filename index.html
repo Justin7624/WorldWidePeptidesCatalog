@@ -1269,7 +1269,7 @@
       halfItems.push({
         id: item.id + "_half",
         name: item.name + (isKit ? " (Half Kit)" : " (Half Bottle)"),
-        cat: isKit ? "half_kits" : "half_bottle",
+        cat: isKit ? "half_kits" : "half_bottles",
         variants: item.variants.map(v => ({
           strength: v.strength,
           price: Math.round((v.price / 2) + 10)
@@ -1390,7 +1390,7 @@
               <h3 class="name">${esc(it.name)}</h3>
               <div class="tagrow">
                 ${it.cat === "kits" ? `<span class="tag kit">10 VIAL KIT</span>` : ""}
-               ${it.cat === "half_kits" || it.cat === "half_bottle" ? `<span class="tag" style="background:rgba(255,255,255,.1)">HALF SIZE</span>` : ""}
+               ${it.cat === "half_kits" || it.cat === "half_bottles" ? `<span class="tag" style="background:rgba(255,255,255,.1)">HALF SIZE</span>` : ""}
                 <span class="tag red">${esc(getCatLabel(it.cat))}</span>
                 <span class="tag mono">${esc(it.id.toUpperCase())}</span>
               </div>
