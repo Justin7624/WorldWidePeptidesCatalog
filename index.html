@@ -820,7 +820,8 @@
       { key:"fatloss", label:"Fat Loss / GLP" },
       { key:"supplies", label:"Supplies" },
       { key:"kits", label:"Kits" },
-      { key:"oil", label:"Oil / Oral" },
+      { key:"oil", label:"Oil" },
+      { key:"oral", label:"oral" }
     ];
 
     const CAT_DESC = {
@@ -828,8 +829,9 @@
       cognitive: "Cognitive / neuro category.",
       fatloss: "Fat loss / GLP category.",
       supplies: "Supplies.",
-      kits: "Kits.",
-      oil: "Oil-based and oral compounds.",
+      kits: "Kit(10 vials).",
+      oil: "Injectable Oil-based compounds.",
+      oral: "Oral tablets (x100 count)."
     };
 
     // Simple, non-hype, plain-English "more info" bullets shown in View (not for Supplies)
@@ -1095,13 +1097,13 @@
         {strength:"30mg", price:160}
       ]},
       
-      { id:"hgh", name:"HGH", cat:"gh", variants:[
+      { id:"hgh", name:"HGH Kit", cat:"kits", variants:[
         {strength:"10iu", price:100},
         {strength:"24iu", price:150},
         {strength:"36iu", price:200}
       ]},
       
-      { id:"tesa", name:"Tesamorelin", cat:"gh", variants:[
+      { id:"tesa", name:"Tesamorelin Kit", cat:"kits", variants:[
         {strength:"10mg", price:200}
       ]},
       
@@ -1113,17 +1115,17 @@
         {strength:"kit", price:235}
       ]},
       
-      { id:"reta", name:"Retatrutide", cat:"fatloss", variants:[
+      { id:"reta", name:"Retatrutide Kit", cat:"kits", variants:[
         {strength:"10mg", price:150},
         {strength:"15mg", price:200},
         {strength:"30mg", price:275}
       ]},
       
-      { id:"selank", name:"Selank", cat:"cognitive", variants:[
+      { id:"selank", name:"Selank Kit", cat:"kits", variants:[
         {strength:"10mg", price:110}
       ]},
       
-      { id:"semax", name:"Semax", cat:"cognitive", variants:[
+      { id:"semax", name:"Semax Kit", cat:"kits", variants:[
         {strength:"10mg", price:110}
       ]},
       
@@ -1170,57 +1172,57 @@
       { id:"test600", name:"TEST 600 MIX", cat:"oil", variants:[
         {strength:"blend", price:45}
       ]},
-      { id:"anavar", name:"Anavar", cat:"oil", variants:[
+      { id:"anavar", name:"Anavar", cat:"oral", variants:[
         {strength:"10mg x100", price:70},
         {strength:"50mg x100", price:110}
       ]},
       
-      { id:"anadrol", name:"Anadrol", cat:"oil", variants:[
+      { id:"anadrol", name:"Anadrol", cat:"oral", variants:[
         {strength:"50mg x100", price:60}
       ]},
       
-      { id:"cialis", name:"Cialis", cat:"oil", variants:[
+      { id:"cialis", name:"Cialis", cat:"oral", variants:[
         {strength:"20mg x100", price:40}
       ]},
       
-      { id:"superdrol", name:"Superdrol", cat:"oil", variants:[
+      { id:"superdrol", name:"Superdrol", cat:"oral", variants:[
         {strength:"10mg x100", price:80}
       ]},
       
-      { id:"arimidex", name:"Arimidex", cat:"oil", variants:[
+      { id:"arimidex", name:"Arimidex", cat:"oral", variants:[
         {strength:"1mg x100", price:50}
       ]},
       
-      { id:"nolva", name:"Nolvadex", cat:"oil", variants:[
+      { id:"nolva", name:"Nolvadex", cat:"oral", variants:[
         {strength:"20mg x100", price:50}
       ]},
       
-      { id:"dbol", name:"Dbol", cat:"oil", variants:[
+      { id:"dbol", name:"Dbol", cat:"oral", variants:[
         {strength:"20mg x100", price:80}
       ]},
       
-      { id:"winstrol", name:"Winstrol", cat:"oil", variants:[
+      { id:"winstrol", name:"Winstrol", cat:"oral", variants:[
         {strength:"50mg x100", price:100}
       ]},
       
-      { id:"clomid", name:"Clomid", cat:"oil", variants:[
-        {strength:"50mg", price:45}
+      { id:"clomid", name:"Clomid", cat:"oral", variants:[
+        {strength:"50mg x100", price:45}
       ]},
       
-      { id:"proviron", name:"Proviron", cat:"oil", variants:[
-        {strength:"25mg", price:60}
+      { id:"proviron", name:"Proviron", cat:"oral", variants:[
+        {strength:"25mg x100", price:60}
       ]},
       
-      { id:"clen", name:"Clen", cat:"oil", variants:[
-        {strength:"40mcg", price:35}
+      { id:"clen", name:"Clen", cat:"oral", variants:[
+        {strength:"40mcg x100", price:35}
       ]},
       
-      { id:"mk677oral", name:"MK-677", cat:"oil", variants:[
-        {strength:"25mg", price:80}
+      { id:"mk677oral", name:"MK-677", cat:"oral", variants:[
+        {strength:"25mg x100", price:80}
       ]},
       
-      { id:"lgd4033", name:"LGD-4033", cat:"oil", variants:[
-        {strength:"12mg", price:60}
+      { id:"lgd4033", name:"LGD-4033", cat:"oral", variants:[
+        {strength:"12mg x100", price:60}
       ]}
     ];
 
@@ -1387,7 +1389,7 @@
     }
 
     function buildSections(){
-      const order = ["healing","energy","gh","cognitive","aesthetic","fatloss","detox","tabs","supplies","kits","oil"];
+      const order = ["kits","gh","cognitive","fatloss","oral","oil","supplies"];
       return order.map(catKey => {
         if(state.cat !== "all" && state.cat !== catKey) return "";
         const group = ITEMS.filter(it => it.cat===catKey && matches(it, state.q));
