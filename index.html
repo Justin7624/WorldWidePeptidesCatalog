@@ -721,7 +721,6 @@
             <option value="priceAsc">Price: Low → High</option>
             <option value="priceDesc">Price: High → Low</option>
           </select>
-          <button class="btn" id="toggleSections" aria-pressed="false">🧭 Section View</button>
         </div>
 
         <div class="search">
@@ -1227,8 +1226,6 @@
       document.querySelectorAll(".chip[data-key]").forEach(el=>{ el.dataset.active = String(el.dataset.key === state.cat); });
       document.getElementById("sortSel").value = state.sort;
       const t = document.getElementById("toggleSections");
-      t.setAttribute("aria-pressed", String(state.sectionView));
-      t.textContent = state.sectionView ? "🧱 Card Grid" : "🧭 Section View";
     }
 
     function scrollToCat(catKey){
