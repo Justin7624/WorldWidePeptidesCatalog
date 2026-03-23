@@ -1476,10 +1476,6 @@ document.getElementById("dNote").innerHTML = `
       document.getElementById("dStrength").textContent = `Selected: ${variant.strength}`;
     }
 
-    document.getElementById("addToCart").onclick = ()=>{
-      toast("Use checkout button");
-    };
-
     document.getElementById("copyLine").onclick = async ()=>{
       if(!state.detail) return;
       const line = `${state.detail.item.name} — ${state.detail.variant.strength} — ${money(state.detail.variant.price)}`;
