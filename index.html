@@ -43,29 +43,34 @@
       pointer-events:none;
     }
     .molecule-bg{
-      position:fixed; inset:0; z-index:-4; pointer-events:none;
+      position:fixed;
+      inset:0;
+      z-index:-4;
+      pointer-events:none;
+    
       background:
-        radial-gradient(circle at 20% 30%, rgba(30,111,168,.20) 0px, transparent 120px),
-        radial-gradient(circle at 80% 60%, rgba(59,178,115,.18) 0px, transparent 140px),
-        radial-gradient(circle at 50% 80%, rgba(30,111,168,.14) 0px, transparent 160px);
-      animation: floatMolecules 18s infinite linear;
+        radial-gradient(circle at 20% 30%, rgba(59,178,115,.25) 0px, transparent 140px),
+        radial-gradient(circle at 80% 40%, rgba(30,111,168,.25) 0px, transparent 160px),
+        radial-gradient(circle at 60% 80%, rgba(59,178,115,.18) 0px, transparent 180px);
+    
+      animation: floatMolecules 25s infinite linear;
     }
     .molecule-bg::before,
     .molecule-bg::after{
       content:"";
       position:absolute;
       inset:0;
+    
       background:
-        radial-gradient(circle at 32% 22%, rgba(59,178,115,.16) 0px, transparent 90px),
-        radial-gradient(circle at 68% 28%, rgba(30,111,168,.14) 0px, transparent 110px),
-        radial-gradient(circle at 22% 72%, rgba(59,178,115,.12) 0px, transparent 130px),
-        radial-gradient(circle at 78% 78%, rgba(30,111,168,.12) 0px, transparent 95px);
-      animation: floatMoleculesAlt 24s infinite ease-in-out;
+        radial-gradient(circle at 30% 20%, rgba(30,111,168,.2) 0px, transparent 120px),
+        radial-gradient(circle at 70% 60%, rgba(59,178,115,.2) 0px, transparent 140px);
+    
+      animation: floatMoleculesAlt 30s infinite ease-in-out;
     }
+    
     .molecule-bg::after{
-      filter: blur(12px);
-      opacity:.85;
-      animation-duration:30s;
+      filter: blur(25px);
+      opacity:.7;
     }
     @keyframes floatMolecules{
       0%{ transform: translateY(0px) scale(1); }
